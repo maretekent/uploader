@@ -1,0 +1,57 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    {% if GOOGLE_ANALYTICS_PROPERTY_ID and not request.is_preview %} {% include "portal/ga.html" %} {% endif %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{% block title %} {% trans "Log in" %} {% endblock %}</title>
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    <link rel="stylesheet" href="{% static 'material-components-web.min.css' %}">
+    <link rel="stylesheet" href="{% static 'material-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/pages/login.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    {% block extra_header_js %} {% endblock extra_header_js %}
+</head>
+
+<body>
+<header class="mdc-top-app-bar pp-login-topbar">
+    <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start login-topbar_section">
+            <a href="/">
+                <img class="logo--full" src="{% static 'img/jumo-portal.svg' %}">
+            </a>
+        </section>
+    </div>
+</header>
+<div class="mdc-layout-grid login-page-content">
+    <div class="mdc-layout-grid__inner login-page-content__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-2">
+        </div>
+        {% block content %} {% endblock %}
+    </div>
+</div>
+<footer>
+    <ul>
+        <li>
+            <a href="https://www.jumo.world/">About us</a>
+        </li>
+        <li>
+            <a href="/static/html/terms-and-conditions.html">Terms and conditions</a>
+        </li>
+        <li>
+            <a href="/static/html/privacy-policy.html">Privacy policy</a>
+        </li>
+    </ul>
+</footer>
+{% block scripts %}
+    <script src="{% static 'dist/js/login.bundle.js' %}"></script>
+{% endblock scripts %}
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+[flake8]
+exclude = */settings/*,*static/*,*node_modules/*,*venv/*
+max-complexity = 15
+max-line-length = 100

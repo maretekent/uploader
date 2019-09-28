@@ -1,0 +1,20 @@
+FROM node:10.16.0-alpine
+ARG ENVIRONMENT=development
+
+
+ENV ENVIRONMENT=$ENVIRONMENT
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+COPY ./app_dir/portal/static/js /usr/src/app/app_dir/portal/static/js
+COPY ./webpack.config.js /usr/src/app/webpack.config.js
+COPY ./.babelrc /usr/src/app/.babelrc
+COPY ./.yarnrc /usr/src/app/.yarnrc
+COPY ./yarn.lock /usr/src/app/yarn.lock
+COPY ./package.json /usr/src/app/package.json
+COPY ./package-lock.json /usr/src/app/package-lock.json
+
+# Install dependencies
+RUN yarn
+
+CMD ["node", "./node_modules/webpack/bin/webpack.js"]

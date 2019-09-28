@@ -1,0 +1,7 @@
+node_modules/
+app_dir/portal/static/dist/**
+app_dir/portal/static/highcharts/**
+**/dist/**
+ **/node_modules/**
+ **/webpack.config*.js
+*.spec.js

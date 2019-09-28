@@ -1,0 +1,15 @@
+{% extends "authentication/base.html" %}
+{% load i18n %}
+{% block content %}
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 login-form-container">
+    <div class="login-form-container__content-cell">
+        <h5 class="mdc-typography--headline5">{% trans "Welcome to the JUMO Portal" %}</h5>
+        <p class="mdc-typography--body2">{% trans "Please log in with your details below:" %}</p>
+        {% if next and request.user.is_authenticated %}
+            <p>{% trans "Your account doesn't have access to this page. To proceed, please log in with an account that has access." %}</p>
+        {% endif %}
+        {% block form %}
+        {% endblock %}
+    </div>
+    </div>
+{% endblock %}

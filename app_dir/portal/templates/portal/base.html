@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="mdc-typography">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
+    {% block meta %}
+    {% endblock meta %}
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'material-components-web.min.css' %}">
+    <link rel="stylesheet" href="{% static 'material-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/style.css' %}">
+    {% block styles %}
+    {% endblock styles %}
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+</head>
+<body class="mdc-typography">
+<header id="site-top-bar" class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <button id="site-top-bar-menu-button"
+                    class="mdc-icon-button material-icons mdc-top-app-bar__navigation-icon--unbounded">
+                menu
+            </button>
+            <span id="page-title" class="mdc-top-app-bar__title">Title</span>
+        </section>
+        <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
+            <a class="mdc-icon-button material-icons mdc-top-app-bar__action-item--unbounded"
+               href="{% url 'user_logout' %}">
+                input
+            </a>
+        </section>
+    </div>
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+{% block secondary_content %}
+
+  {% endblock secondary_content %}
+
+  {% block scripts %}
+  {% endblock scripts %}
+</body>
+</html>

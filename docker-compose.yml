@@ -1,0 +1,74 @@
+version: '2'
+services:
+  s3-app:
+    environment:
+      - BASE_URL=http://localhost:8001
+      - CREATE_SEED_DATA=True
+      - CSRF_COOKIE_HTTPONLY=False
+      - DB_HOST=s3-db
+      - DB_NAME=s3upload
+      - DB_PASSWORD=root
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DEV_LOGIN_PASSWORD=admin
+      - DEV_LOGIN_USERNAME=admin
+      - DJANGO_SETTINGS_MODULE=configuration.settings.development
+      - ENCRYPTION_KEY=somerandomsecret
+      - PYTHONUNBUFFERED=TRUE
+    build:
+      context: .
+      args:
+        - ENVIRONMENT=development
+    depends_on:
+      - s3-db
+      - s3-js-assistant
+      - s3-sass-assistant
+    volumes:
+      - ./:/usr/src/app
+      - ./docker/dotfiles/.ipython/profile_default/ipython_config.py:/root/.ipython/profile_default/ipython_config.py
+    ports:
+      - 8001:80
+    links:
+      - s3-db
+
+  s3-db:
+    image: postgres:9.6-alpine
+    environment:
+      - POSTGRES_DB=s3upload
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5432:5432
+
+  s3-js-assistant:
+    build:
+      context: .
+      dockerfile: JsAssistantDockerfile
+      args:
+        - ENVIRONMENT=development
+    volumes:
+      - ./app_dir/portal/static/js:/usr/src/app/app_dir/portal/static/js
+      - ./app_dir/portal/static/dist:/usr/src/app/app_dir/portal/static/dist
+      - ./app_dir/operatingmodel/static/js:/usr/src/app/app_dir/operatingmodel/static/js
+      - ./app_dir/adhocreports/static/js:/usr/src/app/app_dir/adhocreports/static/js
+      - ./app_dir/common/static/js:/usr/src/app/app_dir/common/static/js
+      - ./webpack.config.js:/usr/src/app/webpack.config.js
+      - ./.babelrc:/usr/src/app/.babelrc
+      - ./.yarnrc:/usr/src/app/.yarnrc
+      - ./.storybook:/usr/src/app/.storybook
+      - ./yarn.lock:/usr/src/app/yarn.lock
+      - ./package.json:/usr/src/app/package.json
+      - ./package-lock.json:/usr/src/app/package-lock.json
+
+  s3-sass-assistant:
+    build:
+      context: .
+      dockerfile: SassAssistantDockerfile
+      args:
+        - ENVIRONMENT=development
+    volumes:
+      - ./app_dir/portal/static/scss:/usr/src/app/app_dir/portal/static/scss
+      - ./app_dir/portal/static/dist:/usr/src/app/app_dir/portal/static/dist
+      - ./package.json:/usr/src/app/package.json
+      - ./package-lock.json:/usr/src/app/package-lock.json
+      - ./yarn.lock:/usr/src/app/yarn.lock
+      - ./.yarnrc:/usr/src/app/.yarnrc
