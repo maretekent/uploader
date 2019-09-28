@@ -1,4 +1,4 @@
-django==2.2.3
+django==2.2.4
 beautifulsoup4==4.7.1
 dj-static==0.0.6
 django-webpack-loader==0.6.0
