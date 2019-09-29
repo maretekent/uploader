@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_http_methods
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from structlog import get_logger
@@ -48,34 +48,35 @@ class LoginView(BaseTemplateview):
     def post(self, request, *args, **kwargs):
 
         form = EmailForm(request.POST)
-        if not form.is_valid():
-            messages.error(request, form.get_error())
-            return redirect("check-user-type")
+        if form.is_valid():
 
-        email = form.cleaned_data["email_address"]
-        password = form.cleaned_data("password")
+            email = form.cleaned_data["email_address"]
+            password = form.cleaned_data("password")
 
-        # email = request.POST.get("email")
-        # password = request.POST.get("password")
+            # email = request.POST.get("email")
+            # password = request.POST.get("password")
 
-        if not email:
-            messages.error(request, settings.AUTHENTICATION_EMAIL_IS_REQUIRED)
-            return redirect("/login")
+            if not email:
+                messages.error(request, settings.AUTHENTICATION_EMAIL_IS_REQUIRED)
 
-        if not password:
-            messages.error(request, settings.AUTHENTICATION_PASSWORD_IS_REQUIRED)
-            return redirect("/login")
+            if not password:
+                messages.error(request, settings.AUTHENTICATION_PASSWORD_IS_REQUIRED)
 
-        if "next" in request.GET.keys():
-            redirect_url = request.GET["next"]
+            if "next" in request.GET.keys():
+                redirect_url = request.GET["next"]
 
-        user = authenticate(email=email, password=password)
-        if user is not None:
-            login(request, user)
-            redirect(redirect_url)
+            user = authenticate(email=email, password=password)
+            if user is not None:
+                login(request, user)
+                redirect(redirect_url)
+            else:
+                messages.error(request, settings.AUTHENTICATION_INVALID_LOGIN)
+
+            return render(request, self.template_name, {'form': form})
+
         else:
-            messages.error(request, settings.AUTHENTICATION_INVALID_LOGIN)
-            redirect("/login")
+            messages.error(request, form.get_error())
+            return render(request, self.template_name, {'form': form})
 
 
 @csrf_protect
