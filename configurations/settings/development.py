@@ -2,14 +2,15 @@ from .base import *
 
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "s3upload",
-        "USER": "root",
-        "PASSWORD": "admin123",
+        "USER": "s3upload",
+        "PASSWORD": "s3upload",
         "HOST": "127.0.0.1",
-        "PORT": "3306",
+        "PORT": "5432",
     }
 }
 
