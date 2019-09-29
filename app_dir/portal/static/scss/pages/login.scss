@@ -1,0 +1,126 @@
+:root {
+  --mdc-layout-grid-margin-desktop: 0px;
+}
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-image: url("../../../img/background-dots.png");
+  background-color: #fff;
+  overflow: scroll;
+}
+
+.login-page-content {
+  height: 100vh;
+
+  &__inner {
+    height: calc(100% - 128px);
+  }
+
+  &::before {
+    position: absolute;
+    width: 35%;
+    background-color: #fff;
+    content: '';
+    display: block;
+    height: 100%;
+    right: 0;
+  }
+}
+
+.mdc-textfield-helptext {
+  font-family: Roboto;
+  margin-bottom: 8px;
+  font-size: 12px;
+  line-height: 14px;
+  padding-top: 16px;
+}
+
+// Overriding this classes, no better way of changing
+// the default colors for these classes
+.mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: var(--mdc-theme-primary);
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused,
+.mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused,
+.mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused,
+.mdc-notched-outline__trailing {
+    border-color: var(--mdc-theme-primary);
+}
+
+.mdc-button--raised:not(:disabled), .mdc-button--unelevated:not(:disabled) {
+    background-color: #E2F2FF;
+}
+
+.mdc-button--raised:not(:disabled), .mdc-button--unelevated:not(:disabled) {
+    color: var(--mdc-theme-primary);
+}
+
+.mdc-typography--headline5 {
+  margin-top: 0px;
+  margin-bottom: 24px;
+}
+
+.mdc-typography--body2 a {
+  color: var(--mdc-theme-primary);
+}
+
+.mdc-text-field {
+    width: 100%;
+}
+.mdc-top-app-bar {
+  position: unset;
+}
+
+.login-form-container {
+  margin: auto;
+
+  &__heading {
+    margin-bottom: 0;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 47px;
+    padding-bottom: 16px;
+  }
+
+  &__info {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 15px;
+    line-height: 28px;
+  }
+
+  &__info-without-textfield {
+    margin-top: 8px;
+    margin-bottom: 0;
+    font-size: 15px;
+    line-height: 28px;
+  }
+
+  &__content-cell {
+    position: relative;
+    border-radius: 2px;
+    height: auto;
+    min-width: 440px;
+    background-color: #FFFFFF;
+    padding: 48px;
+    max-width: 440px;
+  }
+
+  input {
+    font-size: 16px;
+  }
+
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px white inset;
+  }
+
+  .mdc-textfield__label {
+    font-family: Roboto, san-serif;
+  }
+
+  .login-button {
+    margin-top: 48px;
+    min-width: 132px;
+  }
+
+}

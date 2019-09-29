@@ -1,0 +1,44 @@
+@charset "UTF-8";
+@import "@material/layout-grid/mdc-layout-grid";
+
+/* variables */
+:root {
+  --mdc-layout-grid-column-width-desktop: 54px;
+  --mdc-layout-grid-column-width-tablet: 52px;
+  --mdc-layout-grid-column-width-phone: 52px;
+  --mdc-theme-primary: #0074E0;
+  --mdc-theme-secondary: #0074E0;
+  --mdc-theme-secondary-light: #0074E0;
+  --mdc-theme-secondary-dark: #0074E0;
+  --mdc-theme-on-surface: #4287f5;
+  --pp-topbar-text-color: #FFFFFF;
+  --footer-links-color: #0074E0;
+  --dashboard-links-color: #0074E0;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  background-color: #FAFAFA;
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: 20px;
+}
+
+.mdc-layout-grid {
+  @include mdc-layout-grid($size: 'desktop', $margin: 0, $max-width: 960px);
+}
+
+/* Page Filters Menu Styling */
+
+.page-filters-section {
+
+  .mdc-toolbar__icon {
+    color: #000000;
+  }
+
+}
+
+a.mdc-top-app-bar__navigation-icon {
+  text-decoration: none;
+}
