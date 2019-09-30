@@ -2,14 +2,72 @@
 {% load i18n %}
 {% block content %}
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8 login-form-container">
-    <div class="login-form-container__content-cell">
-        <h5 class="mdc-typography--headline5">{% trans "Welcome to the Uploader Portal" %}</h5>
-        <p class="mdc-typography--body2">{% trans "Please log in with your details below:" %}</p>
-        {% if next and request.user.is_authenticated %}
-            <p>{% trans "Your account doesn't have access to this page. To proceed, please log in with an account that has access." %}</p>
-        {% endif %}
-        {% block form %}
-        {% endblock %}
-    </div>
+        <div class="login-form-container__content-cell">
+            <h5 class="mdc-typography--headline5">{% trans "Welcome to the Uploader Portal" %}</h5>
+            <p class="mdc-typography--body2">{% trans "Please log in with your details below:" %}</p>
+            {% if next and request.user.is_authenticated %}
+                <p>{% trans "Your account doesn't have access to this page. To proceed, please log in with an account that has access." %}</p>
+            {% endif %}
+            {% block form %}
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.csrfmiddlewaretoken }}
+                    {% if messages and not account_lock_message %}
+                        {% for message in messages %}
+                            <div class="login-message login-message--{{ message.tags }}">
+                                {% blocktrans %}
+                                    {{ message }}
+                                {% endblocktrans %}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if account_lock_message %}
+                        <div class="login-message login-message--error">
+                            {% blocktrans %}
+                                {{ account_lock_message }}
+                            {% endblocktrans %}
+                        </div>
+                    {% endif %}
+                    <div class="separator"></div>
+                    <div id="email-container" class="mdc-text-field mdc-text-field--outlined">
+                        <input name="email" id="email" class="mdc-text-field__input"
+                               value="{{ user_email }}">
+                        <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading"></div>
+                            <div class="mdc-notched-outline__notch">
+                                <label for="text-field-hero-input"
+                                       class="mdc-floating-label">Email</label>
+                            </div>
+                            <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                    </div>
+
+                    <div class="text-field__separator"></div>
+                    <div id="password-container"
+                         class="mdc-text-field mdc-text-field--outlined">
+                        <input type="password" name="password" id="id_password"
+                               class="mdc-text-field__input">
+                        <div class="mdc-notched-outline">
+                            <div class="mdc-notched-outline__leading"></div>
+                            <div class="mdc-notched-outline__notch">
+                                <label for="text-field-hero-input" class="mdc-floating-label">Password</label>
+                            </div>
+                            <div class="mdc-notched-outline__trailing"></div>
+                        </div>
+                    </div>
+
+                    <p class="mdc-textfield-helptext
+		  mdc-textfield-helptext--persistent">
+                        <a class="login-form__forgot-password-link" href="{% url 'resend-link' %}">Forgot
+                            password?</a>
+                    </p>
+
+                    <input class="mdc-button mdc-button--unelevated login-button" type="submit"
+                           value="{% trans " Log in " %}" class="button"
+                    />
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                </form>
+            {% endblock %}
+        </div>
     </div>
 {% endblock %}

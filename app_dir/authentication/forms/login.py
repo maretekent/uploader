@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 
 
-class EmailForm(forms.Form):
+class LoginForm(forms.Form):
     email_address = forms.EmailField(
         required=True,
         error_messages={"required": settings.AUTHENTICATION_EMAIL_IS_REQUIRED},

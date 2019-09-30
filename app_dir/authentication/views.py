@@ -7,11 +7,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import redirect, render
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, View
 from django.views.generic.edit import FormView
 from structlog import get_logger
 
-from app_dir.authentication.forms.email_login import EmailForm
+from app_dir.authentication.forms.email import EmailForm
+from app_dir.authentication.forms.login import LoginForm
 
 
 logger = get_logger(__name__)
@@ -19,6 +20,7 @@ logger = get_logger(__name__)
 
 class BaseFormView(FormView):
     """ Base Form class """
+
     def get(self, request, *args, **kwargs):
         if not requests.session.get("user_email"):
             redirect("/")
@@ -28,6 +30,7 @@ class BaseFormView(FormView):
 
 class BaseTemplateview(TemplateView):
     """ Base Template view class"""
+
     def get(self, request, *args, **kwargs):
         if not request.session.get("user_email"):
             redirect("/")
@@ -44,12 +47,12 @@ class LoginView(BaseTemplateview):
         return context
 
     def get(self, request, *args, **kwargs):
-        form = EmailForm()
-        return render(request, self.template_name, {'form': form})
+        form = LoginForm()
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request, *args, **kwargs):
 
-        form = EmailForm(request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
 
             email = form.cleaned_data["email_address"]
@@ -74,11 +77,43 @@ class LoginView(BaseTemplateview):
             else:
                 messages.error(request, settings.AUTHENTICATION_INVALID_LOGIN)
 
-            return render(request, self.template_name, {'form': form})
+            return render(request, self.template_name, {"form": form})
 
         else:
             messages.error(request, form.get_error())
-            return render(request, self.template_name, {'form': form})
+            return render(request, self.template_name, {"form": form})
+
+
+class ResendPassworldLinkView(View):
+    """Resends Password link to provided email address"""
+
+    def get(self, request):
+        form = EmailForm()
+        return render(request, "authentication/enter_email.html", {"form": form})
+
+    def post(self, request):
+
+        form = EmailForm(request.POST)
+        if form.is_valid():
+
+            email_address = form.cleaned_data["email_address"]
+            logger.info(
+                "resend-password-link-validation-passed",
+                data=dict(request.POST),
+                email=email_address,
+            )
+
+            if is_internal_email(email_address.lower()):
+                logger.info("resend-password-email-is-internal", email=email_address)
+                return redirect("contact-it-helpdesk")
+
+            # notification_services.send_password_link(email_address)
+            request.session.flush()  # clear any sensitive session variables
+            return redirect("password-link-sent")
+
+        messages.error(request, form.get_error())
+        logger.info("resend-password-link-validation-failed", data=form.errors)
+        return render(request, "authentication/enter_email.html", {"form": form})
 
 
 @csrf_protect
