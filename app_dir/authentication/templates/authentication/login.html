@@ -30,7 +30,7 @@
                     {% endif %}
                     <div class="separator"></div>
                     <div id="email-container" class="mdc-text-field mdc-text-field--outlined">
-                        <input name="email" id="email" class="mdc-text-field__input"
+                        <input name="{{ form.email_address.name }}" id="email" class="mdc-text-field__input"
                                value="{{ user_email }}">
                         <div class="mdc-notched-outline">
                             <div class="mdc-notched-outline__leading"></div>
@@ -45,7 +45,7 @@
                     <div class="text-field__separator"></div>
                     <div id="password-container"
                          class="mdc-text-field mdc-text-field--outlined">
-                        <input type="password" name="password" id="id_password"
+                        <input type="password" name="{{ form.password.name }}" id="id_password"
                                class="mdc-text-field__input">
                         <div class="mdc-notched-outline">
                             <div class="mdc-notched-outline__leading"></div>

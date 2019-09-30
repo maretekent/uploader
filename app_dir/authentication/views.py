@@ -52,20 +52,16 @@ class LoginView(BaseTemplateview):
 
     def post(self, request, *args, **kwargs):
 
+        logger.info(
+            "logging in ",
+            data=dict(request.POST)
+        )
+
         form = LoginForm(request.POST)
         if form.is_valid():
 
             email = form.cleaned_data["email_address"]
-            password = form.cleaned_data("password")
-
-            # email = request.POST.get("email")
-            # password = request.POST.get("password")
-
-            if not email:
-                messages.error(request, settings.AUTHENTICATION_EMAIL_IS_REQUIRED)
-
-            if not password:
-                messages.error(request, settings.AUTHENTICATION_PASSWORD_IS_REQUIRED)
+            password = form.cleaned_data["password"]
 
             if "next" in request.GET.keys():
                 redirect_url = request.GET["next"]
@@ -102,10 +98,6 @@ class ResendPassworldLinkView(View):
                 data=dict(request.POST),
                 email=email_address,
             )
-
-            if is_internal_email(email_address.lower()):
-                logger.info("resend-password-email-is-internal", email=email_address)
-                return redirect("contact-it-helpdesk")
 
             # notification_services.send_password_link(email_address)
             request.session.flush()  # clear any sensitive session variables

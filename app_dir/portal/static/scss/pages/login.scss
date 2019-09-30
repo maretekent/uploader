@@ -183,3 +183,194 @@ body {
     display: block;
   }
 }
+
+
+.mdc-form-field>label {
+  padding-left: 8px;
+}
+
+.invalid-input {
+  color: white;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  height: 64px;
+  width: 100%;
+  background: #fff;
+  text-align: center;
+
+  li {
+    display: inline;
+    padding: 0px 24px 0px 0px;
+
+    a {
+      text-decoration: none;
+      color: var(--mdc-theme-primary);
+    }
+  }
+}
+
+.login-form__forgot-password-link {
+  float: right;
+
+  &:link,
+  &:visited,
+  &:hover,
+  &:active {
+    color: var(--mdc-theme-primary);
+    text-decoration: inherit;
+    font-weight: inherit;
+  }
+}
+
+.input-field-container {
+  &.mdc-textfield--upgraded:not(.mdc-textfield--fullwidth):not(.mdc-textfield--box) {
+    /*This is necessary because the not pseudo class takes precedence forcing an
+    override of the built in MDC style*/
+    margin-bottom: 8px;
+    margin-top: 0;
+  }
+}
+
+/* Tablet portrait mode */
+@media only screen and (max-device-width: 1024px) and (orientation: portrait) {
+  body {
+    height: 100vh;
+  }
+
+  .login-form-container {
+    margin-top: 0px;
+  }
+}
+
+/* most modern phones landscape */
+@media only screen and (max-device-width: 823px) and (orientation: landscape) {
+  body {
+    overflow: scroll;
+    background-image: none;
+  }
+
+  .login-error {
+    margin: 24px 0 32px 0;
+  }
+
+  .login-page-content {
+    overflow: scroll;
+  }
+
+  .login-form-container::after {
+    display: block;
+    content: '';
+    height: 48px;
+  }
+}
+
+/* ipad pro portrait */
+@media only screen and (min-device-height: 1025px) and (max-device-height: 1366px) and (orientation: portrait) {
+  .login-form-container {
+    margin-top: auto;
+  }
+}
+
+/* screen width < tablet landscape */
+@media only screen and (max-device-width: 1024px) and (orientation: landscape) {
+  .login-page-content {
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+
+  .login-form-container {
+    padding: 48px 0px 0px 0px;
+  }
+
+  .login-button {
+    margin: 48px 0px;
+  }
+
+  footer {
+    bottom: 0;
+    margin: 48px 0px 0px 0px;
+  }
+}
+
+/* phones */
+@media(max-device-width: 480px) {
+  body {
+    background-image: none;
+    overflow: scroll;
+  }
+
+  .pp-login-topbar {
+    .login-topbar_section {
+      img {
+        margin-left: 24px;
+      }
+    }
+  }
+  .login-form-container {
+    &__content-cell {
+      min-width: unset;
+      padding: 0px;
+      top: 50px;
+    }
+  }
+
+  .login-toolbar {
+    .login-toolbar_section {
+      img {
+        margin-left: 24px;
+      }
+    }
+  }
+
+  .login-error {
+    margin: 24px 0 32px 0;
+  }
+
+  .login-message {
+    &--error {
+      margin: 0 0 0 0;
+    }
+  }
+
+  .separator {
+    margin-top: 32px;
+  }
+
+  .login-page-content {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    overflow: scroll;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .login-form-container {
+    padding: 48px 0px 0px 0px;
+  }
+
+  .login-button {
+    margin: 48px 0px;
+  }
+
+  footer {
+    position: relative;
+    top: 48px;
+    padding: 0px 0px 24px 0px;
+
+    ul {
+      padding: 0px;
+
+      li {
+        padding: 0px;
+        margin: 0px 0px 8px 0px;
+        display: block;
+      }
+    }
+  }
+}
