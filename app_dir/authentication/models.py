@@ -11,7 +11,7 @@ class AbstractUser(models.Model):
 
 
 class Role(models.Model):
-    group = models.OneToOneField(Group, related_name="role")
+    group = models.OneToOneField(Group, related_name="role", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def add_user(self, user):

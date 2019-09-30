@@ -41,9 +41,11 @@ class LoginView(BaseTemplateview):
 
     def get_context_data(self, **kwargs):
         context = super(LoginView, self).get_context_data()
-        email = self.request.session.get("user_email")
-        context["user_email"] = email
         return context
+
+    def get(self, request, *args, **kwargs):
+        form = EmailForm()
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
 

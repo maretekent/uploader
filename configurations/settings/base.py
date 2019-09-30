@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "rest_framework",
+    "app_dir.authentication",
+    "app_dir.portal",
 ]
 
 MIDDLEWARE = [
@@ -117,11 +120,28 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+BASE_URL = os.environ.get("BASE_URL", "https://localhost:8090")
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = os.environ.get("STATIC_URL", "/static/")
+DEFAULT_STATIC_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, "static"))
+STATIC_ROOT = os.environ.get("STATIC_ROOT", DEFAULT_STATIC_ROOT)
+STATICFILES_DIRS = (
+    os.path.abspath(
+        os.path.join(PROJECT_DIR, "node_modules/material-components-web/dist")
+    ),
+    os.path.abspath(
+        os.path.join(PROJECT_DIR, "node_modules/material-design-icons/iconfont")
+    ),
+    os.path.abspath(os.path.join(PROJECT_DIR, "node_modules/pdfjs-dist/build")),
+    os.path.abspath(os.path.join(PROJECT_DIR, "node_modules/materialize-css/dist")),
+    os.path.abspath(os.path.join(PROJECT_DIR, "node_modules/jquery/dist")),
+    os.path.abspath(os.path.join(PROJECT_DIR, "node_modules/react-day-picker/lib")),
+)
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.abspath(os.path.join(PROJECT_DIR, "/media"))
 
 # Logging configuration
 LOGGING = {
