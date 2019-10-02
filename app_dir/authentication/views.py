@@ -80,7 +80,7 @@ class LoginView(BaseTemplateview):
             return render(request, self.template_name, {"form": form})
 
 
-class ResendPassworldLinkView(View):
+class ResendPasswordLinkView(View):
     """Resends Password link to provided email address"""
 
     def get(self, request):
